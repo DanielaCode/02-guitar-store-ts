@@ -1,5 +1,17 @@
+type Guitar = {
+    id:number
+    name: string
+    image: string
+    description: string
+    price: number
+}
 
-function Guitar({guitar, addItem}) {
+type GuitarProps ={
+    guitar:Guitar
+    addItem:(item:Guitar)=>void
+}
+
+function Guitar({guitar, addItem}:GuitarProps) {
     return (
         <div className="col-md-6 col-lg-4 my-4 row align-items-center">
             <div className="col-4">
