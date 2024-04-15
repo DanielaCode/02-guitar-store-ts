@@ -1,5 +1,6 @@
 import { useEffect, useState,useMemo } from "react"
 import { db } from "../data/db";
+import type { Guitar,CartItem } from "../types";
 
 //custom hook 
 //allows to separate the presentation(view) from the logic
@@ -7,7 +8,7 @@ import { db } from "../data/db";
 //allows to do testing easier
 function useCart() {
 
-    const storageInitialCart = () => {
+    const storageInitialCart = () : Guitar[]=> {
         const localStorageCart = localStorage.getItem("cart");
         return localStorageCart ? JSON.parse(localStorageCart) : [];
     }
@@ -19,7 +20,7 @@ function useCart() {
     //manage secundary effects of the change of an state so any time cart change this will happen
 
     //https://doesitmutate.xyz/ dont mutate the state 
-    function addItem(item) {
+    function addItem(item:Guitar) {
         //verify if the item already exist in the state
         const itemExist = cart.findIndex(e => e.id === item.id);
         if (itemExist >= 0) {
@@ -38,8 +39,10 @@ function useCart() {
             //does not exist
             //adding quantity prop because this item is a cartItem not a guitar
             //first time quantity is 1
-            item.quantity = 1;
-            setCart([...cart, item]);//because if I use push it will mutate the state
+
+            //TS: CASTING A GUITAR TO A CARTITEM
+            const newItem:CartItem= {...item,quantity:1}
+            setCart([...cart, newItem]);//because if I use push it will mutate the state
         }
         //IMPORTANT!! the localstorage will be fill in the second attend because:
         //STATE IS ASYNC , so the can set happens after this call to savelocalstorage
