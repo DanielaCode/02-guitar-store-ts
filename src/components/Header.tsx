@@ -1,8 +1,22 @@
+import { CartItem, Guitar } from "../types"
+
+//this prevent the errors in the props
+type HeaderProps={
+    cart:CartItem[]
+    removeItem:(id:Guitar["id"])=>void
+    increaseQuantity:(id:Guitar["id"])=>void
+    decreaseQuantity:(id:Guitar["id"])=>void
+    clearCart:()=>void
+    isEmpty:boolean
+    cartTotal:number
+}
 
 //IMPORTANT!!
 //dont import here usecart custom hook because each instance is a new cart and I just need one for the whole project
 //insted pass the isempty and totalcart derived states via props
-function Header({ cart,removeItem,increaseQuantity,decreaseQuantity,clearCart,isEmpty,cartTotal}) {
+
+//TS: NOTE THAT THE PROPS DOES NOT GUESS THE TYPE CART EVEN IF IN DE PARENT IS DEFINED
+function Header({ cart,removeItem,increaseQuantity,decreaseQuantity,clearCart,isEmpty,cartTotal}:HeaderProps) {
     return (
         <header className="py-5 header">
             <div className="container-xl">
