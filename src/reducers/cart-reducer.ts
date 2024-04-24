@@ -27,8 +27,21 @@ export const cartReducer = (
 ) => {
   if (action.type === "add-to-cart") {
     console.log(action.payload.item)
+     const itemExist =state.cart.findIndex(e => e.id === action.payload.item.id);
+     let updatedCart: CartItem[]= [];
+     if (itemExist >= 0) {
+         if (state.cart[itemExist].quantity >= 5)
+             return;
+          updatedCart = [...state.cart];
+         updatedCart[itemExist].quantity++;
+     } else {
+         const newItem:CartItem= {...action.payload.item,quantity:1}
+         updatedCart=[...state.cart,newItem]
+     }
+
     return {
       ...state,
+      cart: updatedCart
     };
   }
 
