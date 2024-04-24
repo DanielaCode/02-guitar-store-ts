@@ -1,6 +1,8 @@
+import { useReducer } from "react";
 import Guitar from "./components/Guitar"
 import Header from "./components/Header"
 import useCart from "./hooks/useCart"
+import { cartReducer, initialState } from "./reducers/cart-reducer";
 
 //this website will be deploy in netlify
 function App() {
@@ -16,6 +18,7 @@ function App() {
     cartTotal
   } = useCart();
 
+  const [state,dispatch] = useReducer(cartReducer,initialState);
   return (
     <>
       <Header
