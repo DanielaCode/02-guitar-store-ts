@@ -7,7 +7,6 @@ import { cartReducer, initialState } from "./reducers/cart-reducer";
 //this website will be deploy in netlify
 function App() {
   const {
-    data, 
     cart,
     addItem,
     removeItem,
@@ -36,7 +35,7 @@ function App() {
 
         <div className="row mt-5">
           {
-            data.map((e)=>(
+            state.data.map((e)=>(
               <Guitar 
                 key={e.id} 
                 guitar={e}

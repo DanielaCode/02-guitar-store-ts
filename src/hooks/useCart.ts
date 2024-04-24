@@ -1,5 +1,4 @@
 import { useEffect, useState,useMemo } from "react"
-import { db } from "../data/db";
 import type { Guitar,CartItem } from "../types";
 
 //custom hook 
@@ -12,8 +11,7 @@ function useCart() {
         const localStorageCart = localStorage.getItem("cart");
         return localStorageCart ? JSON.parse(localStorageCart) : [];
     }
-
-    const [data] = useState(db);
+ 
     const [cart, setCart] = useState(storageInitialCart);
 
     useEffect(() => { localStorage.setItem("cart", JSON.stringify(cart)) }, [cart])
@@ -102,7 +100,6 @@ function useCart() {
 
     //return an object
     return {
-        data, 
         cart,
         addItem,
         removeItem,

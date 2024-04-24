@@ -54,4 +54,6 @@ export const cartReducer = (
       ...state,
     };
   }
+
+  return state;
 };
