@@ -6,7 +6,6 @@ import { CartActions } from "../reducers/cart-reducer"
 type HeaderProps={
     cart:CartItem[]
     dispatch:React.Dispatch<CartActions>
-    clearCart:()=>void
 }
 
 //IMPORTANT!!
@@ -14,7 +13,7 @@ type HeaderProps={
 //insted pass the isempty and totalcart derived states via props
 
 //TS: NOTE THAT THE PROPS DOES NOT GUESS THE TYPE CART EVEN IF IN DE PARENT IS DEFINED
-function Header({ cart,dispatch,clearCart}:HeaderProps) {
+function Header({ cart,dispatch}:HeaderProps) {
     const isEmpty = useMemo(()=>cart.length <= 0,[cart]);
     const cartTotal = useMemo( ()=> cart.reduce((total, e) => total + (e.quantity * e.price), 0),[cart]);
     return (
@@ -94,7 +93,7 @@ function Header({ cart,dispatch,clearCart}:HeaderProps) {
                                 )}
                                 <button 
                                     className="btn btn-dark w-100 mt-3 p-2"
-                                    onClick={clearCart}>Vaciar Carrito</button>
+                                    onClick={()=>dispatch({type:"clear-cart"})}>Vaciar Carrito</button>
                             </div>
                         </div>
                     </nav>

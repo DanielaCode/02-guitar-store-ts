@@ -13,16 +13,10 @@ function useCart() {
 
     useEffect(() => { localStorage.setItem("cart", JSON.stringify(cart)) }, [cart])
     //manage secundary effects of the change of an state so any time cart change this will happen
- 
-
-    function clearCart() {
-        setCart([]);
-    }
+   
 
     return {
         cart,
-        clearCart,
-
     }
 }
 
