@@ -17,38 +17,6 @@ function useCart() {
     useEffect(() => { localStorage.setItem("cart", JSON.stringify(cart)) }, [cart])
     //manage secundary effects of the change of an state so any time cart change this will happen
 
-    //https://doesitmutate.xyz/ dont mutate the state 
-    function addItem(item:Guitar) {
-        //verify if the item already exist in the state
-        const itemExist = cart.findIndex(e => e.id === item.id);
-        if (itemExist >= 0) {
-            if (cart[itemExist].quantity >= 5)
-                return;
-            //exist
-            //update quantity
-            //cart[itemExist].quantity++, WRONG it will mutate the state
-            //how to?
-            //Create a copy of the cart
-            const updatedCart = [...cart];
-            updatedCart[itemExist].quantity++;
-            setCart(updatedCart);//always modify state with setFunction
-
-        } else {
-            //does not exist
-            //adding quantity prop because this item is a cartItem not a guitar
-            //first time quantity is 1
-
-            //TS: CASTING A GUITAR TO A CARTITEM
-            const newItem:CartItem= {...item,quantity:1}
-            setCart([...cart, newItem]);//because if I use push it will mutate the state
-        }
-        //IMPORTANT!! the localstorage will be fill in the second attend because:
-        //STATE IS ASYNC , so the can set happens after this call to savelocalstorage
-        //otherwise the set will block the render
-        //saveLocalStorage();
-        //better use useEffect
-    }
-
 
     function removeItem(id:Guitar["id"]) {
         setCart(prevCart => prevCart.filter((e) => e.id !== id));
@@ -101,7 +69,6 @@ function useCart() {
     //return an object
     return {
         cart,
-        addItem,
         removeItem,
         increaseQuantity,
         decreaseQuantity,
