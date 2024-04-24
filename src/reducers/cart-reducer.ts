@@ -50,8 +50,10 @@ export const cartReducer = (
   }
 
   if (action.type === "remove-from-cart") {
+    const updatedCart = state.cart.filter(e=>e.id!== action.payload.id);
     return {
       ...state,
+      cart:updatedCart
     };
   }
 

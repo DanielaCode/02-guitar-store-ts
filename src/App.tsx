@@ -7,7 +7,6 @@ import { cartReducer, initialState } from "./reducers/cart-reducer";
 //this website will be deploy in netlify
 function App() {
   const {
-    removeItem,
     increaseQuantity,
     decreaseQuantity,
     clearCart,
@@ -18,7 +17,7 @@ function App() {
     <>
       <Header
         cart = {state.cart}
-        removeItem = {removeItem}
+        dispatch = {dispatch}
         increaseQuantity={increaseQuantity}
         decreaseQuantity={decreaseQuantity}
         clearCart={clearCart}        

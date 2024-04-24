@@ -1,10 +1,11 @@
 import { useMemo } from "react"
 import { CartItem, Guitar } from "../types"
+import { CartActions } from "../reducers/cart-reducer"
 
 //this prevent the errors in the props
 type HeaderProps={
     cart:CartItem[]
-    removeItem:(id:Guitar["id"])=>void
+    dispatch:React.Dispatch<CartActions>
     increaseQuantity:(id:Guitar["id"])=>void
     decreaseQuantity:(id:Guitar["id"])=>void
     clearCart:()=>void
@@ -15,7 +16,7 @@ type HeaderProps={
 //insted pass the isempty and totalcart derived states via props
 
 //TS: NOTE THAT THE PROPS DOES NOT GUESS THE TYPE CART EVEN IF IN DE PARENT IS DEFINED
-function Header({ cart,removeItem,increaseQuantity,decreaseQuantity,clearCart}:HeaderProps) {
+function Header({ cart,dispatch,increaseQuantity,decreaseQuantity,clearCart}:HeaderProps) {
     const isEmpty = useMemo(()=>cart.length <= 0,[cart]);
     const cartTotal = useMemo( ()=> cart.reduce((total, e) => total + (e.quantity * e.price), 0),[cart]);
     return (
@@ -80,7 +81,7 @@ function Header({ cart,removeItem,increaseQuantity,decreaseQuantity,clearCart}:H
                                                                 <button
                                                                     className="btn btn-danger"
                                                                     type="button"
-                                                                    onClick={()=>removeItem(e.id)}
+                                                                    onClick={()=>dispatch({type:"remove-from-cart",payload:{id:e.id}})}
                                                                 >
                                                                     X
                                                                 </button>

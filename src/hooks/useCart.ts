@@ -1,4 +1,4 @@
-import { useEffect, useState,useMemo } from "react"
+import { useEffect, useState } from "react"
 import type { Guitar,CartItem } from "../types";
 
 //custom hook 
@@ -16,13 +16,6 @@ function useCart() {
 
     useEffect(() => { localStorage.setItem("cart", JSON.stringify(cart)) }, [cart])
     //manage secundary effects of the change of an state so any time cart change this will happen
-
-
-    function removeItem(id:Guitar["id"]) {
-        setCart(prevCart => prevCart.filter((e) => e.id !== id));
-        //the set function already knows what is in the state
-        //and you can used it via callback as it is avoid and the parameter is the previous cart
-    }
 
     function increaseQuantity(id:Guitar["id"]) {
         const updatedCart = cart.map((e) => {
@@ -56,7 +49,6 @@ function useCart() {
 
     return {
         cart,
-        removeItem,
         increaseQuantity,
         decreaseQuantity,
         clearCart,
