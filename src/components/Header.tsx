@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import { CartItem, Guitar } from "../types"
 
 //this prevent the errors in the props
@@ -7,8 +8,6 @@ type HeaderProps={
     increaseQuantity:(id:Guitar["id"])=>void
     decreaseQuantity:(id:Guitar["id"])=>void
     clearCart:()=>void
-    isEmpty:boolean
-    cartTotal:number
 }
 
 //IMPORTANT!!
@@ -16,7 +15,9 @@ type HeaderProps={
 //insted pass the isempty and totalcart derived states via props
 
 //TS: NOTE THAT THE PROPS DOES NOT GUESS THE TYPE CART EVEN IF IN DE PARENT IS DEFINED
-function Header({ cart,removeItem,increaseQuantity,decreaseQuantity,clearCart,isEmpty,cartTotal}:HeaderProps) {
+function Header({ cart,removeItem,increaseQuantity,decreaseQuantity,clearCart}:HeaderProps) {
+    const isEmpty = useMemo(()=>cart.length <= 0,[cart]);
+    const cartTotal = useMemo( ()=> cart.reduce((total, e) => total + (e.quantity * e.price), 0),[cart]);
     return (
         <header className="py-5 header">
             <div className="container-xl">

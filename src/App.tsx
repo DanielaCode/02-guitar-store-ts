@@ -7,27 +7,21 @@ import { cartReducer, initialState } from "./reducers/cart-reducer";
 //this website will be deploy in netlify
 function App() {
   const {
-    cart,
     removeItem,
     increaseQuantity,
     decreaseQuantity,
     clearCart,
-    isEmpty,
-    cartTotal
   } = useCart();
 
   const [state,dispatch] = useReducer(cartReducer,initialState);
   return (
     <>
       <Header
-        cart = {cart}
+        cart = {state.cart}
         removeItem = {removeItem}
         increaseQuantity={increaseQuantity}
         decreaseQuantity={decreaseQuantity}
-        clearCart={clearCart}
-        isEmpty={isEmpty}
-        cartTotal={cartTotal}
-        
+        clearCart={clearCart}        
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
