@@ -1,5 +1,11 @@
 import { db } from "../data/db";
 import { CartItem, Guitar } from "../types";
+
+const storageInitialCart = () : CartItem[]=> {
+    const localStorageCart = localStorage.getItem("cart");
+    return localStorageCart ? JSON.parse(localStorageCart) : [];
+}
+
 //NOTE - actions
 export type CartActions =
   | { type: "add-to-cart"; payload: { item: Guitar } }
@@ -17,7 +23,7 @@ export type CartState = {
 //NOTE - Initial state
 export const initialState: CartState = {
   data: db,
-  cart: [],
+  cart: storageInitialCart(),
 };
 
 //NOTE - reducer, todo lonhecho arriba es para tener autocompletado aca
