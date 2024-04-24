@@ -58,14 +58,37 @@ export const cartReducer = (
   }
 
   if (action.type === "increase-quantity") {
+
+    const updatedCart = state.cart.map((e) => {
+        if (e.id === action.payload.id && e.quantity < 5) {
+            return {
+                ...e,
+                quantity: e.quantity + 1
+            }
+        }
+        return e;
+    });
+
     return {
       ...state,
+      cart:updatedCart
     };
   }
 
   if (action.type === "decrease-quantity") {
+    const updatedCart = state.cart.map((e) => {
+        if (e.id === action.payload.id && e.quantity > 1) {
+            return {
+                ...e,
+                quantity: e.quantity - 1
+            }
+        }
+        return e;
+    });
+
     return {
       ...state,
+      cart:updatedCart
     };
   }
 

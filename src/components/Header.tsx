@@ -1,13 +1,11 @@
 import { useMemo } from "react"
-import { CartItem, Guitar } from "../types"
+import { CartItem } from "../types"
 import { CartActions } from "../reducers/cart-reducer"
 
 //this prevent the errors in the props
 type HeaderProps={
     cart:CartItem[]
     dispatch:React.Dispatch<CartActions>
-    increaseQuantity:(id:Guitar["id"])=>void
-    decreaseQuantity:(id:Guitar["id"])=>void
     clearCart:()=>void
 }
 
@@ -16,7 +14,7 @@ type HeaderProps={
 //insted pass the isempty and totalcart derived states via props
 
 //TS: NOTE THAT THE PROPS DOES NOT GUESS THE TYPE CART EVEN IF IN DE PARENT IS DEFINED
-function Header({ cart,dispatch,increaseQuantity,decreaseQuantity,clearCart}:HeaderProps) {
+function Header({ cart,dispatch,clearCart}:HeaderProps) {
     const isEmpty = useMemo(()=>cart.length <= 0,[cart]);
     const cartTotal = useMemo( ()=> cart.reduce((total, e) => total + (e.quantity * e.price), 0),[cart]);
     return (
@@ -64,7 +62,7 @@ function Header({ cart,dispatch,increaseQuantity,decreaseQuantity,clearCart}:Hea
                                                                 <button
                                                                     type="button"
                                                                     className="btn btn-dark"
-                                                                    onClick={()=>decreaseQuantity(e.id)}
+                                                                    onClick={()=>dispatch({type:"decrease-quantity",payload:{id:e.id}})}
                                                                 >
                                                                     -
                                                                 </button>
@@ -72,7 +70,7 @@ function Header({ cart,dispatch,increaseQuantity,decreaseQuantity,clearCart}:Hea
                                                                 <button
                                                                     type="button"
                                                                     className="btn btn-dark"
-                                                                    onClick={()=>increaseQuantity(e.id)}
+                                                                    onClick={()=>dispatch({type:"increase-quantity",payload:{id:e.id}})}
                                                                 >
                                                                     +
                                                                 </button>
